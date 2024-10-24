@@ -117,7 +117,7 @@ Resources:
 
           def handler(event, context):
               ssm = boto3.client("ssm")
-              secretsmanager = boto3.client("secretsmanager")
+              secrets_manager = boto3.client("secretsmanager")
 
               user_name = event['detail']['requestParameters']['userName']
               email_param = f"/emails/{user_name.lower()}"
