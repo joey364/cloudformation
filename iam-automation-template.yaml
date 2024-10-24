@@ -113,14 +113,13 @@ Resources:
               secretsmanager = boto3.client("secretsmanager")
               print(event)
 
-              for record in event["Records"]:
-                  user_name = record['detail']['requestParameters']['userName']
-                  email = ssm.get_parameter(Name=f"/emails/{user_name}")['Parameter']['Value']
+              user_name = event['requestParameters']['userName']
+              email = ssm.get_parameter(Name=f"/emails/{user_name}")['Parameter']['Value']
 
-                  password = secretsmanager.get_secret_value(SecretId=f"{user_name}Password")["SecretString"]
-                  password = json.loads(password)["password"]
+              password = secretsmanager.get_secret_value(SecretId=f"{user_name}Password")["SecretString"]
+              password = json.loads(password)["password"]
 
-                  print(f"User: {user_name}, Email: {email}, Temporary Password: {password}")
+              print(f"User: {user_name}, Email: {email}, Temporary Password: {password}")
 
   LambdaExecutionRole:
     Type: AWS::IAM::Role
