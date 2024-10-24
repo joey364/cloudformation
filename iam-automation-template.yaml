@@ -62,16 +62,6 @@ Resources:
         Password: !Sub "{{resolve:secretsmanager:${OneTimePassword}::password}}"
         PasswordResetRequired: true
 
-  S3User2:
-    Type: AWS::IAM::User
-    Properties:
-      Groups:
-        - !Ref S3Group
-      UserName: s3-user-2
-      LoginProfile:
-        Password: !Sub "{{resolve:secretsmanager:${OneTimePassword}::password}}"
-        PasswordResetRequired: true
-
   OneTimePassword:
     Type: AWS::SecretsManager::Secret
     Properties:
