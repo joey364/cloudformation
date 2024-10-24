@@ -62,6 +62,16 @@ Resources:
         Password: !Sub "{{resolve:secretsmanager:${OneTimePassword}::password}}"
         PasswordResetRequired: true
 
+  S3User2:
+    Type: AWS::IAM::User
+    Properties:
+      Groups:
+        - !Ref S3Group
+      UserName: s3-user-2
+      LoginProfile:
+        Password: !Sub "{{resolve:secretsmanager:${OneTimePassword}::password}}"
+        PasswordResetRequired: true
+
   OneTimePassword:
     Type: AWS::SecretsManager::Secret
     Properties:
@@ -78,6 +88,13 @@ Resources:
       Name: "/emails/ec2-user"
       Type: String
       Value: s3-user-qmg9@gmail.com
+    
+  S3User2EmailParameter:
+    Type: AWS::SSM::Parameter
+    Properties:
+      Name: "/emails/s3-user-2"
+      Type: String
+      Value: s3-user-2@gmail.com
 
   S3UserEmailParameter:
     Type: AWS::SSM::Parameter
