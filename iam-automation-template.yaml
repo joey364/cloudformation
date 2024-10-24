@@ -105,7 +105,7 @@ Resources:
 
               for record in event["Records"]:
                   user_name = record['detail']['requestParameters']['userName']
-                  email = ssm.get_parameter(Name=f"/users/{user_name}/email")['Parameter']['Value']
+                  email = ssm.get_parameter(Name=f"/emails/{user_name}")['Parameter']['Value']
 
                   password = secretsmanager.get_secret_value(SecretId=f"{user_name}Password")["SecretString"]
                   password = json.loads(password)["password"]
