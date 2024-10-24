@@ -113,7 +113,7 @@ Resources:
               secretsmanager = boto3.client("secretsmanager")
               print(event)
 
-              user_name = event['requestParameters']['userName']
+              user_name = event['detail']['requestParameters']['userName']
               email = ssm.get_parameter(Name=f"/emails/{user_name}")['Parameter']['Value']
 
               password = secretsmanager.get_secret_value(SecretId=f"{user_name}Password")["SecretString"]
