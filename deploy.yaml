@@ -1,1 +1,1 @@
-template-file-path: ./cloudformation/iam-automation-template.yaml
+template-file-path: ./iam-automation-template.yaml
