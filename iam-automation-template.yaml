@@ -42,46 +42,6 @@ Resources:
       ManagedPolicyArns:
         - !Ref EC2ReadOnlyPolicy
 
-  EC2User:
-    Type: AWS::IAM::User
-    Properties:
-      Groups:
-        - !Ref EC2Group
-      UserName: ec2-user
-      LoginProfile:
-        Password: !Sub "{{resolve:secretsmanager:${OneTimePassword}::password}}"
-        PasswordResetRequired: true
-
-  S3User:
-    Type: AWS::IAM::User
-    Properties:
-      Groups:
-        - !Ref S3Group
-      UserName: s3-user
-      LoginProfile:
-        Password: !Sub "{{resolve:secretsmanager:${OneTimePassword}::password}}"
-        PasswordResetRequired: true
-
-  S3User2:
-    Type: AWS::IAM::User
-    Properties:
-      Groups:
-        - !Ref S3Group
-      UserName: s3-user-2
-      LoginProfile:
-        Password: !Sub "{{resolve:secretsmanager:${OneTimePassword}::password}}"
-        PasswordResetRequired: true
-
-  MyUser:
-    Type: AWS::IAM::User
-    Properties:
-      Groups:
-        - !Ref S3Group
-      UserName: my-user
-      LoginProfile:
-        Password: !Sub "{{resolve:secretsmanager:${OneTimePassword}::password}}"
-        PasswordResetRequired: true
-
   OneTimePassword:
     Type: AWS::SecretsManager::Secret
     Properties:
