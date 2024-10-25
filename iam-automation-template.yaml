@@ -42,6 +42,26 @@ Resources:
       ManagedPolicyArns:
         - !Ref EC2ReadOnlyPolicy
 
+  EC2User:
+    Type: AWS::IAM::User
+    Properties:
+      Groups:
+        - !Ref EC2Group
+      UserName: ec2-user
+      LoginProfile:
+        Password: !Sub "{{resolve:secretsmanager:${OneTimePassword}::password}}"
+        PasswordResetRequired: true
+
+  S3User:
+    Type: AWS::IAM::User
+    Properties:
+      Groups:
+        - !Ref S3Group
+      UserName: s3-user
+      LoginProfile:
+        Password: !Sub "{{resolve:secretsmanager:${OneTimePassword}::password}}"
+        PasswordResetRequired: true
+
   OneTimePassword:
     Type: AWS::SecretsManager::Secret
     Properties:
@@ -59,27 +79,13 @@ Resources:
       Name: "/emails/ec2-user"
       Type: String
       Value: s3-user-qmg9@gmail.com
-    
-  S3User2EmailParameter:
-    Type: AWS::SSM::Parameter
-    Properties:
-      Name: "/emails/s3-user-2"
-      Type: String
-      Value: s3-user-2@gmail.com
 
   S3UserEmailParameter:
     Type: AWS::SSM::Parameter
     Properties:
       Name: "/emails/s3-user"
       Type: String
-      Value: ec2-user-kekn@gmail.com
-
-  MyUserEmailParameter:
-    Type: AWS::SSM::Parameter
-    Properties:
-      Name: "/emails/my-user"
-      Type: String
-      Value: my-user@gmail.com
+      Value: s3-user-kekn@gmail.com
 
   WelcomeEmailFunction:
     Type: AWS::Lambda::Function
