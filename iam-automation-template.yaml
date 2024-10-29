@@ -62,6 +62,23 @@ Resources:
         Password: !Sub "{{resolve:secretsmanager:${OneTimePassword}::password}}"
         PasswordResetRequired: true
 
+  User700:
+    Type: AWS::IAM::User
+    Properties:
+      Groups:
+        - !Ref S3Group
+      UserName: user700
+      LoginProfile:
+        Password: !Sub "{{resolve:secretsmanager:${OneTimePassword}::password}}"
+        PasswordResetRequired: true
+
+  User700EmailParameter:
+    Type: AWS::SSM::Parameter
+    Properties:
+      Name: "/emails/user700"
+      Type: String
+      Value: user700@gmail.com
+
   OneTimePassword:
     Type: AWS::SecretsManager::Secret
     Properties:
